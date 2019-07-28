@@ -16,6 +16,7 @@ public class OwnersViewer extends VerticalLayout {
     @Autowired
     public OwnersViewer(OwnerRepository ownerRepository){
         Grid<Owner> grid = new Grid<>(Owner.class);
+        grid.removeColumnByKey("cars");
         grid.setItems(ownerRepository.findAll());
         add(grid);
     }

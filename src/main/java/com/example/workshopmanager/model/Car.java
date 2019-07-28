@@ -1,8 +1,6 @@
 package com.example.workshopmanager.model;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -14,6 +12,8 @@ import java.util.Date;
 @Setter
 @Getter
 @Builder
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class Car {
 
     @Id
@@ -37,8 +37,8 @@ public class Car {
     private int numberOfAxles;
     private int maxWeightOfTrailerWithBrakes;
     private int maxWeightOfTrailerWithoutBrakes;
-    private int engineCapacity;
-    private int maxPowerInKW;
+    private String engineCapacity;
+    private String maxPowerInKW;
     private int numberOfSeats;
     private int numberOfStandingPlaces;
     private String dateOfNextDiagnosticInspection;
