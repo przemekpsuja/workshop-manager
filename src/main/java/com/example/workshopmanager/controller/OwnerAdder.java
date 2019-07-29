@@ -96,7 +96,6 @@ public class OwnerAdder extends VerticalLayout {
             clientNIPNumber.setValue("");
         });
 
-
         add(clientName, clientSurname, clientAdressStreet, clientAdressCity, clientAdressZipCode, clientPhoneNumber,
                 clientEmail, isClientACompany, clientNIPNumber, submitButton);
     }
