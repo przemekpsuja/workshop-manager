@@ -112,7 +112,6 @@ public class OwnerAdder extends VerticalLayout {
                 notification.setPosition(Notification.Position.MIDDLE);
                 notification.getElement().attachShadow();
                 notification.open();
-
             }
         });
 
