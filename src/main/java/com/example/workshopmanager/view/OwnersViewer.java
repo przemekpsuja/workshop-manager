@@ -15,7 +15,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@Route("allowners")
+@Route("allOwners")
 public class OwnersViewer extends VerticalLayout {
 
     private OwnerAdder ownerAdder;

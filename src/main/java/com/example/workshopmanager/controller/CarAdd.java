@@ -1,11 +1,14 @@
 package com.example.workshopmanager.controller;
 
 import com.example.workshopmanager.model.Car;
+import com.example.workshopmanager.model.CarType;
 import com.example.workshopmanager.model.EngineType;
 import com.example.workshopmanager.repository.CarRepository;
 import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
@@ -34,6 +37,11 @@ public class CarAdd extends VerticalLayout {
         carModelField.setLabel("Model");
         carModelField.setRequired(true);
 
+        ComboBox<CarType> carTypeField = new ComboBox<>();
+        carTypeField.setItems(CarType.values());
+        carTypeField.setLabel("Rodzaj nadwozia");
+        carTypeField.setRequired(true);
+
         TextField carBuildYear = new TextField();
         carBuildYear.setLabel("Rok produkcji");
         carBuildYear.setPattern("\\d{4}");
@@ -53,17 +61,36 @@ public class CarAdd extends VerticalLayout {
         carEngineTypeField.setItems(EngineType.values());
         carEngineTypeField.setLabel("Rodzaj silnika");
 
-        formLayout.add(carBrandField, carModelField, carBuildYear, carVinNumberField, carPlateField,
-                carEngineCapacityField, carMaxPowerField, carEngineTypeField );
+        Label invisibleLabel = new Label();
 
+        Button saveButton = new Button("Zapisz", saveEvent -> {
+            Car car = new Car().builder()
+            .carBrand(carBrandField.getValue())
+            .carModel(carModelField.getValue())
+            .carType(carTypeField.getValue())
+            .plate(carPlateField.getValue().toUpperCase())
+            .productionDate(carBuildYear.getValue())
+            .vinNumber(carVinNumberField.getValue().toUpperCase())
+            .engineCapacity(carEngineCapacityField.getValue())
+            .maxPowerInKW(String.valueOf(carMaxPowerField.getValue()))
+            .engineType(carEngineTypeField.getValue())
+                    .build();
 
+            carRepository.save(car);
 
+        });
+
+        Button cancleButton = new Button("Anuluj", cancleEvent -> {
+//            editWindow.close();
+        });
+
+        formLayout.add(carBrandField, carModelField, carTypeField, carBuildYear, carVinNumberField, carPlateField,
+                carEngineCapacityField, carMaxPowerField, carEngineTypeField, invisibleLabel, saveButton, cancleButton );
 
         formLayout.setResponsiveSteps(
                 new FormLayout.ResponsiveStep("0", 1),
                 new FormLayout.ResponsiveStep("21em", 2),
                 new FormLayout.ResponsiveStep("22em", 3));
-
 
         add(formLayout);
     }

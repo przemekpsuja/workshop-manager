@@ -78,9 +78,9 @@ public class OwnerAdder extends VerticalLayout {
 
         Button submitButton = new Button("Dodaj klienta", event -> {
 
-            if (!clientName.getValue().isEmpty() && !clientSurname.getValue().isEmpty()
-                    && !clientPhoneNumber.getValue().isEmpty() && clientAdressZipCode.getValue().matches(zipCodePattern)
-                    && clientEmail.getValue().matches(emailPattern)) {
+            if (!clientName.getValue().isEmpty() && !clientSurname.getValue().isEmpty() && !clientPhoneNumber.getValue().isEmpty()){
+//                     && clientAdressZipCode.getValue().matches(zipCodePattern)
+//                    && clientEmail.getValue().matches(emailPattern)) {
                 Owner owner = new Owner().builder()
                         .ownerName(clientName.getValue())
                         .ownerSurname(clientSurname.getValue())
