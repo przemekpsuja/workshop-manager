@@ -21,6 +21,10 @@ public class OwnerAdder extends VerticalLayout {
     @Autowired
     public OwnerAdder(OwnerRepository ownerRepository) {
 
+        String emailPattern = "\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b";
+        String zipCodePattern = "\\d{2}-\\d{3}";
+        String errorMessage = "Użytkownik nie został utworzony. Wypełnij wymagane pola.";
+
         TextField clientName = new TextField();
         clientName.setAutofocus(true);
         clientName.setLabel("Imię: ");
@@ -44,7 +48,7 @@ public class OwnerAdder extends VerticalLayout {
         TextField clientAdressZipCode = new TextField();
         clientAdressZipCode.setLabel("Kod pocztowy: ");
         clientAdressZipCode.setWidth("300px");
-        clientAdressZipCode.setPattern("\\d{2}-\\d{3}");
+        clientAdressZipCode.setPattern(zipCodePattern);
 
         TextField clientPhoneNumber = new TextField();
         clientPhoneNumber.setLabel("Nr tel: ");
@@ -53,7 +57,7 @@ public class OwnerAdder extends VerticalLayout {
 
         TextField clientEmail = new TextField();
         clientEmail.setLabel("E-mail: ");
-        clientEmail.setPattern("\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b");
+        clientEmail.setPattern(emailPattern);
         clientEmail.setWidth("300px");
 
         Checkbox isClientACompany = new Checkbox();
@@ -74,48 +78,71 @@ public class OwnerAdder extends VerticalLayout {
 
         Button submitButton = new Button("Dodaj klienta", event -> {
 
-            Owner owner = new Owner().builder()
-                    .ownerName(clientName.getValue())
-                    .ownerSurname(clientSurname.getValue())
-                    .ownerAdressStreet(clientAdressStreet.getValue())
-                    .ownerAdressCity(clientAdressCity.getValue())
-                    .ownerAdressZipCode(clientAdressZipCode.getValue())
-                    .ownerPhoneNumber(clientPhoneNumber.getValue())
-                    .ownerEmail(clientEmail.getValue())
-                    .isOwnerACompany(isClientACompany.getValue())
-                    .ownerNIPNumber(clientNIPNumber.getValue())
-                    .cars(new ArrayList<>())
-                    .build();
-            ownerRepository.save(owner);
-            clientName.setValue("");
-            clientSurname.setValue("");
-            clientAdressStreet.setValue("");
-            clientAdressCity.setValue("");
-            clientAdressZipCode.setValue("");
-            clientEmail.setValue("");
-            clientPhoneNumber.setValue("");
-            isClientACompany.setValue(false);
-            clientNIPNumber.setValue("");
+            if (!clientName.getValue().isEmpty() && !clientSurname.getValue().isEmpty()
+                    && !clientPhoneNumber.getValue().isEmpty() && clientAdressZipCode.getValue().matches(zipCodePattern)
+                    && clientEmail.getValue().matches(emailPattern)) {
+                Owner owner = new Owner().builder()
+                        .ownerName(clientName.getValue())
+                        .ownerSurname(clientSurname.getValue())
+                        .ownerAdressStreet(clientAdressStreet.getValue())
+                        .ownerAdressCity(clientAdressCity.getValue())
+                        .ownerAdressZipCode(clientAdressZipCode.getValue())
+                        .ownerPhoneNumber(clientPhoneNumber.getValue())
+                        .ownerEmail(clientEmail.getValue())
+                        .isOwnerACompany(isClientACompany.getValue())
+                        .ownerNIPNumber(clientNIPNumber.getValue())
+                        .cars(new ArrayList<>())
+                        .build();
+                ownerRepository.save(owner);
+                clientName.setValue("");
+                clientSurname.setValue("");
+                clientAdressStreet.setValue("");
+                clientAdressCity.setValue("");
+                clientAdressZipCode.setValue("");
+                clientEmail.setValue("");
+                clientPhoneNumber.setValue("");
+                isClientACompany.setValue(false);
+                clientNIPNumber.setValue("");
 
-            if (owner != null) {
                 Label content = new Label("Użytkownik " + owner.getOwnerName() + " " + owner.getOwnerSurname() +
-                        " " + "został dodany do bazy");
+                            " " + "został dodany do bazy");
                 Notification notification = new Notification(content);
-                notification.setDuration(3000);
-                notification.setPosition(Notification.Position.MIDDLE);
-                notification.getElement().attachShadow();
-                notification.open();
+                    notification.setDuration(3000);
+                    notification.setPosition(Notification.Position.MIDDLE);
+                    notification.getElement().attachShadow();
+                    notification.open();
+
+//                if (owner != null) {
+//                    Label content = new Label("Użytkownik " + owner.getOwnerName() + " " + owner.getOwnerSurname() +
+//                            " " + "został dodany do bazy");
+//                    Notification notification = new Notification(content);
+//                    notification.setDuration(3000);
+//                    notification.setPosition(Notification.Position.MIDDLE);
+//                    notification.getElement().attachShadow();
+//                    notification.open();
+//                } else {
+//                    Label content = new Label(errorMessage);
+//                    Notification notification = new Notification(content);
+//                    notification.setDuration(3000);
+//                    notification.setPosition(Notification.Position.MIDDLE);
+//                    notification.getElement().attachShadow();
+//                    notification.open();
+//                }
             } else {
-                Label content = new Label("Użytkownik nie został utworzony");
-                Notification notification = new Notification(content);
-                notification.setDuration(3000);
-                notification.setPosition(Notification.Position.MIDDLE);
-                notification.getElement().attachShadow();
-                notification.open();
+                Notification saveErrorNotification = new Notification(errorMessage, 3000,
+                        Notification.Position.MIDDLE);
+                    saveErrorNotification.getElement().attachShadow();
+                    saveErrorNotification.open();
+//                Label content = new Label(errorMessage);
+//                    Notification notification = new Notification(content);
+//                    notification.setDuration(3000);
+//                    notification.setPosition(Notification.Position.MIDDLE);
             }
         });
+
 
         add(clientName, clientSurname, clientAdressStreet, clientAdressCity, clientAdressZipCode, clientPhoneNumber,
                 clientEmail, isClientACompany, clientNIPNumber, submitButton);
     }
+
 }

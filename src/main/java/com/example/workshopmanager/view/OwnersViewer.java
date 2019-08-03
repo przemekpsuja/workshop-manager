@@ -15,8 +15,6 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.awt.*;
-
 @Route("allowners")
 public class OwnersViewer extends VerticalLayout {
 
@@ -151,7 +149,13 @@ public class OwnersViewer extends VerticalLayout {
         grid.removeColumnByKey("ownerNIPNumber");
         grid.removeColumnByKey("ownerACompany");
         grid.setColumnReorderingAllowed(true);
-        add(grid);
+
+        TextField searchField = new TextField();
+        searchField.setPlaceholder("Znajdź");
+//        searchField.addInputListener(event -> {
+//            grid.setItems((Owner) ownerRepository.findb);
+//        });
+        add(searchField, grid);
     }
 
     //TODO add mouse item focus listener,

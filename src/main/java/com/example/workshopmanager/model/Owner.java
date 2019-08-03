@@ -30,5 +30,17 @@ public class Owner {
     @OneToMany(mappedBy = "owner")
     private List<Car> cars;
 
-
+    @Override
+    public String toString() {
+        return "Owner{" +
+                "ownerName='" + ownerName + '\'' +
+                ", ownerSurname='" + ownerSurname + '\'' +
+                ", ownerAdressStreet='" + ownerAdressStreet + '\'' +
+                ", ownerAdressCity='" + ownerAdressCity + '\'' +
+                ", ownerAdressZipCode='" + ownerAdressZipCode + '\'' +
+                ", ownerPhoneNumber='" + ownerPhoneNumber + '\'' +
+                ", ownerEmail='" + ownerEmail + '\'' +
+                ", ownerNIPNumber='" + ownerNIPNumber + '\'' +
+                '}';
+    }
 }
