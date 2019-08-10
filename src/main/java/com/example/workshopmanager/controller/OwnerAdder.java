@@ -78,9 +78,9 @@ public class OwnerAdder extends VerticalLayout {
 
         Button submitButton = new Button("Dodaj klienta", event -> {
 
-            if (!clientName.getValue().isEmpty() && !clientSurname.getValue().isEmpty() && !clientPhoneNumber.getValue().isEmpty()){
-//                     && clientAdressZipCode.getValue().matches(zipCodePattern)
-//                    && clientEmail.getValue().matches(emailPattern)) {
+            if (!clientName.getValue().isEmpty() && !clientSurname.getValue().isEmpty() &&
+                    !clientPhoneNumber.getValue().isEmpty()) {
+
                 Owner owner = new Owner().builder()
                         .ownerName(clientName.getValue())
                         .ownerSurname(clientSurname.getValue())
@@ -105,12 +105,12 @@ public class OwnerAdder extends VerticalLayout {
                 clientNIPNumber.setValue("");
 
                 Label content = new Label("Użytkownik " + owner.getOwnerName() + " " + owner.getOwnerSurname() +
-                            " " + "został dodany do bazy");
+                        " " + "został dodany do bazy");
                 Notification notification = new Notification(content);
-                    notification.setDuration(3000);
-                    notification.setPosition(Notification.Position.MIDDLE);
-                    notification.getElement().attachShadow();
-                    notification.open();
+                notification.setDuration(3000);
+                notification.setPosition(Notification.Position.MIDDLE);
+                notification.getElement().attachShadow();
+                notification.open();
 
 //                if (owner != null) {
 //                    Label content = new Label("Użytkownik " + owner.getOwnerName() + " " + owner.getOwnerSurname() +
@@ -128,11 +128,12 @@ public class OwnerAdder extends VerticalLayout {
 //                    notification.getElement().attachShadow();
 //                    notification.open();
 //                }
+
             } else {
                 Notification saveErrorNotification = new Notification(errorMessage, 3000,
                         Notification.Position.MIDDLE);
-                    saveErrorNotification.getElement().attachShadow();
-                    saveErrorNotification.open();
+                saveErrorNotification.getElement().attachShadow();
+                saveErrorNotification.open();
 //                Label content = new Label(errorMessage);
 //                    Notification notification = new Notification(content);
 //                    notification.setDuration(3000);
