@@ -21,12 +21,14 @@ import java.util.Collection;
 public class Main extends HorizontalLayout {
 
     public Main() {
-        Collection<SimpleGrantedAuthority> authorities = (Collection<SimpleGrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-        if (authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+        Collection<SimpleGrantedAuthority> authorities = (Collection<SimpleGrantedAuthority>) SecurityContextHolder
+                .getContext().getAuthentication().getAuthorities();
+        if (authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
             AppLayout appLayout = new AppLayout();
 
             AppLayoutMenu menu = appLayout.createMenu();
-            Image img = new Image("https://i.pinimg.com/originals/72/82/5c/72825cd366980b3ba05c314c9e6e75bb.png", "Car workshop Logo");
+            Image img = new Image("https://i.pinimg.com/originals/72/82/5c/72825cd366980b3ba05c314c9e6e75bb.png",
+                    "Car workshop Logo");
             img.setHeight("100px");
             appLayout.setBranding(img);
             Image mainPicture = new Image("/images/helloImage.png", "hello");
@@ -48,7 +50,9 @@ public class Main extends HorizontalLayout {
             AppLayoutMenuItem seeCustomers = new AppLayoutMenuItem("Lista klientów", "allOwners");
             AppLayoutMenuItem seeAllCars = new AppLayoutMenuItem("Lista samochodów", "allCars");
 
-
+            calendar.addMenuItemClickListener(ClickEvent -> {
+                calendar.getUI().ifPresent(ui -> ui.navigate("/dates"));
+            });
             seeAllCars.addMenuItemClickListener(ClickEvent -> {
                 seeAllCars.getUI().ifPresent(ui -> ui.navigate("/allCars"));
 
@@ -107,7 +111,8 @@ public class Main extends HorizontalLayout {
         } else {
             AppLayout appLayout = new AppLayout();
             AppLayoutMenu menu = appLayout.createMenu();
-            Image img = new Image("https://i.pinimg.com/originals/72/82/5c/72825cd366980b3ba05c314c9e6e75bb.png", "Car workshop Logo");
+            Image img = new Image("https://i.pinimg.com/originals/72/82/5c/72825cd366980b3ba05c314c9e6e75bb.png",
+                    "Car workshop Logo");
             img.setHeight("100px");
             appLayout.setBranding(img);
             Image mainPicture = new Image("/images/helloImage.png", "hello");
