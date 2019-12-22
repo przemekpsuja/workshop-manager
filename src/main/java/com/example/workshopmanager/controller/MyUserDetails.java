@@ -1,4 +1,4 @@
-package com.example.workshopmanager.repository;
+package com.example.workshopmanager.controller;
 
 import com.example.workshopmanager.model.User;
 import org.springframework.security.core.GrantedAuthority;

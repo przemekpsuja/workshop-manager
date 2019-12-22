@@ -1,8 +1,8 @@
 package com.example.workshopmanager.security;
 
+import com.example.workshopmanager.controller.MailService;
 import com.example.workshopmanager.model.User;
 import com.example.workshopmanager.repository.UserRepository;
-import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -12,14 +12,18 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.mail.MessagingException;
+
 @Route("registration")
 //@StyleSheet("/background.css")
 public class RegistrationForm extends VerticalLayout {
 
+    private final String registrtionMessage = ("Cześć! Witamy Cię w naszym warsztacie");
     private User user;
+    private MailService mailService;
 
     @Autowired
-    public RegistrationForm(UserRepository userRepository){
+    public RegistrationForm(UserRepository userRepository, MailService mailService){
         VerticalLayout loginLayout = new VerticalLayout();
 
         TextField userNameField = new TextField();
@@ -48,6 +52,12 @@ public class RegistrationForm extends VerticalLayout {
                         .roles("USER")
                         .build();
                 userRepository.save(user);
+                try {
+                    mailService.sendMail(userEmailField.getValue(), "Witamy w warsztacie", registrtionMessage,false);
+                } catch (MessagingException e) {
+                    e.printStackTrace();
+                }
+
 
             } else {
                 Notification error = new Notification("Uzupełnij wszystkie pola") ;
@@ -56,7 +66,7 @@ public class RegistrationForm extends VerticalLayout {
         });
 
         signInButton.addClickListener(ClickEvent -> {
-            signInButton.getUI().ifPresent(ui -> ui.navigate("/"));
+            signInButton.getUI().ifPresent(ui -> ui.navigate(""));
         });
 
         add(userNameField, userEmailField, userPasswordField, signInButton);
