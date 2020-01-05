@@ -1,13 +1,8 @@
 package com.example.workshopmanager.model;
 
-
-
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity(name = "cars")
@@ -19,8 +14,8 @@ public class Car {
     @Id
     private String plate;
     private Date firstRegistrationDate;
-    @ManyToOne
-    @JoinColumn(name = "owner_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "owner_id")
     private Owner owner;
     private String carBrand;
     private CarType carType;
