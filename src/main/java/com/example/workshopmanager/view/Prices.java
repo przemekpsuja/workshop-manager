@@ -9,6 +9,7 @@ import com.vaadin.flow.component.accordion.AccordionPanel;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -18,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @Route("prices")
 @StyleSheet("/background.css")
-public class Prices extends VerticalLayout {
+public class Prices extends Div {
     private PriceRepository priceRepository;
 
     @Autowired

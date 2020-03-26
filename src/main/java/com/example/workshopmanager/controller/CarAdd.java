@@ -4,6 +4,7 @@ import com.example.workshopmanager.model.Car;
 import com.example.workshopmanager.model.CarType;
 import com.example.workshopmanager.model.EngineType;
 import com.example.workshopmanager.repository.CarRepository;
+import com.example.workshopmanager.view.Main;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -12,6 +13,7 @@ import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.router.ParentLayout;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 

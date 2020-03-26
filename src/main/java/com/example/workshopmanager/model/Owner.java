@@ -25,7 +25,7 @@ public class Owner {
     private String ownerEmail;
     private boolean isOwnerACompany;
     private String ownerNIPNumber;
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
     private List<Car> cars;
 
     public Long getId() {
@@ -112,8 +112,8 @@ public class Owner {
         return cars;
     }
 
-    public void setCars(List<Car> cars) {
-        this.cars = cars;
+    public void setCars(List<Car> ownerCars) {
+        this.cars = ownerCars;
     }
 
     @Override
@@ -128,7 +128,5 @@ public class Owner {
                 ", ownerEmail='" + ownerEmail + '\'' +
                 ", ownerNIPNumber='" + ownerNIPNumber + '\'' +
                 '}';
-
-
     }
 }

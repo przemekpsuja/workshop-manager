@@ -15,7 +15,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Collection;
 
-
 @Route("")
 @StyleSheet("/background.css")
 public class Main extends HorizontalLayout {
@@ -23,22 +22,19 @@ public class Main extends HorizontalLayout {
     public Main() {
         Collection<SimpleGrantedAuthority> authorities = (Collection<SimpleGrantedAuthority>) SecurityContextHolder
                 .getContext().getAuthentication().getAuthorities();
+
         if (authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
+
             AppLayout appLayout = new AppLayout();
 
             AppLayoutMenu menu = appLayout.createMenu();
-            Image img = new Image("https://i.pinimg.com/originals/72/82/5c/72825cd366980b3ba05c314c9e6e75bb.png",
-                    "Car workshop Logo");
+            Image img = new Image("https://i.pinimg.com/originals/72/82/5c/72825cd366980b3ba05c314c9e6e75bb.png", "Car workshop Logo");
             img.setHeight("100px");
             appLayout.setBranding(img);
             Image mainPicture = new Image("/images/helloImage.png", "hello");
             mainPicture.setSizeFull();
 
-            AppLayoutMenuItem login = new AppLayoutMenuItem("Zaloguj/Wyloguj");
-            login.addMenuItemClickListener(menuItemClickEvent ->
-            {
-                UI.getCurrent().getPage().executeJavaScript("window.open(\"/login\", \"_self\");");
-            });
+            AppLayoutMenuItem logout = new AppLayoutMenuItem("Wyloguj");
 
             AppLayoutMenuItem registering = new AppLayoutMenuItem("Zarejestruj", "register");
             AppLayoutMenuItem pricesCustomer = new AppLayoutMenuItem("Cennik", "prices");
@@ -50,11 +46,27 @@ public class Main extends HorizontalLayout {
             AppLayoutMenuItem seeCustomers = new AppLayoutMenuItem("Lista klientów", "allOwners");
             AppLayoutMenuItem seeAllCars = new AppLayoutMenuItem("Lista samochodów", "allCars");
 
+
+            Component content = new Span(
+                    mainPicture
+            );
+
+            appLayout.setContent(content);
+
+            logout.addMenuItemClickListener(menuItemClickEvent ->
+            {
+//                content.getUI().get().navigate("window.open(\"/login\", \"_self\");");
+                UI.getCurrent().getPage().executeJavaScript("window.open(\"/logout\", \"_self\");");
+            });
+
             calendar.addMenuItemClickListener(ClickEvent -> {
                 calendar.getUI().ifPresent(ui -> ui.navigate("/dates"));
             });
+
             seeAllCars.addMenuItemClickListener(ClickEvent -> {
-                seeAllCars.getUI().ifPresent(ui -> ui.navigate("/allCars"));
+                Component component = new Span();
+                add(component);
+//                seeAllCars.getUI().ifPresent(ui -> ui.navigate("/allCars"));
 
             });
 
@@ -77,7 +89,10 @@ public class Main extends HorizontalLayout {
             });
 
             addCars.addMenuItemClickListener(ClickEvent -> {
-                addCars.getUI().ifPresent(ui -> ui.navigate("/addCar"));
+                appLayout.setMenu(new Span(addCars));
+
+//                add(appLayout);
+//                addCars.getUI().ifPresent(ui -> ui.navigate("/addCar"));
 
             });
 
@@ -87,25 +102,17 @@ public class Main extends HorizontalLayout {
             });
 
             menu.addMenuItems(
-                    pricesCustomer,
-                    calendar,
-                    contactDetails,
-                    editionPrices,
                     addCars,
+                    seeAllCars,
                     addCustomer,
                     seeCustomers,
-                    seeAllCars,
-                    login
+                    calendar,
+                    pricesCustomer,
+                    editionPrices,
+                    contactDetails,
+                    logout
 //                    registering
             );
-
-            Component content = new Span(
-
-                    mainPicture
-
-            );
-
-            appLayout.setContent(content);
 
             add(appLayout);
         } else {
@@ -118,17 +125,16 @@ public class Main extends HorizontalLayout {
             Image mainPicture = new Image("/images/helloImage.png", "hello");
             mainPicture.setSizeFull();
 
-            AppLayoutMenuItem login = new AppLayoutMenuItem("Zaloguj/Wyloguj");
+            AppLayoutMenuItem login = new AppLayoutMenuItem("Zaloguj");
             login.addMenuItemClickListener(menuItemClickEvent ->
             {
                 UI.getCurrent().getPage().executeJavaScript("window.open(\"/login\", \"_self\");");
             });
 
-            AppLayoutMenuItem registering = new AppLayoutMenuItem("Zarejestruj", "register");
+            AppLayoutMenuItem registration = new AppLayoutMenuItem("Zarejestruj", "registration");
             AppLayoutMenuItem pricesCustomer = new AppLayoutMenuItem("Cennik", "prices");
             AppLayoutMenuItem calendar = new AppLayoutMenuItem("Terminarz", "dates");
             AppLayoutMenuItem contactDetails = new AppLayoutMenuItem("Kontakt", "contact");
-
 
             contactDetails.addMenuItemClickListener(ClickEvent -> {
                 contactDetails.getUI().ifPresent(ui -> ui.navigate("/contact"));
@@ -138,13 +144,12 @@ public class Main extends HorizontalLayout {
                 pricesCustomer.getUI().ifPresent(ui -> ui.navigate("/prices"));
             });
 
-
             menu.addMenuItems(
                     pricesCustomer,
                     calendar,
                     contactDetails,
-                    login
-//                    registering
+                    login,
+                    registration
             );
 
             Component content = new Span(
@@ -159,3 +164,4 @@ public class Main extends HorizontalLayout {
         }
     }
 }
+

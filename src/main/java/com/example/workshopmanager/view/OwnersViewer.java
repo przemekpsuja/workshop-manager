@@ -1,30 +1,48 @@
 package com.example.workshopmanager.view;
 
 import com.example.workshopmanager.controller.OwnerAdder;
+import com.example.workshopmanager.model.Car;
 import com.example.workshopmanager.model.Owner;
+import com.example.workshopmanager.repository.CarRepository;
 import com.example.workshopmanager.repository.OwnerRepository;
+import com.example.workshopmanager.services.CarService;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.contextmenu.GridContextMenu;
 import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.Route;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Route("allOwners")
 public class OwnersViewer extends VerticalLayout {
 
     private OwnerAdder ownerAdder;
+    private OwnerRepository ownerRepository;
+    private CarRepository carRepository;
+    private CarService carService;
 
     @Autowired
-    public OwnersViewer(OwnerRepository ownerRepository) {
+    public OwnersViewer(OwnerRepository ownerRepository, CarRepository carRepository, CarService carService) {
+        this.ownerRepository = ownerRepository;
+        this.carRepository = carRepository;
+        this.carService = carService;
+
         Grid<Owner> grid = new Grid<>(Owner.class);
         grid.getColumnByKey("id").setWidth("30px");
-        grid.addColumn(Owner::getOwnerName).setHeader("Imię");
+        Grid.Column<Owner> ownerNameColumn = grid.addColumn(Owner::getOwnerName).setHeader("Imię");
         grid.addColumn(Owner::getOwnerSurname).setHeader("Nazwisko");
         grid.addColumn(Owner::getOwnerAdressStreet).setHeader("Ulica");
         grid.addColumn(Owner::getOwnerAdressCity).setHeader("Miasto");
@@ -43,6 +61,10 @@ public class OwnersViewer extends VerticalLayout {
                 editWindow.setCloseOnOutsideClick(false);
 
                 FormLayout editForm = new FormLayout();
+                editForm.setResponsiveSteps(
+                        new FormLayout.ResponsiveStep("25em", 1),
+                        new FormLayout.ResponsiveStep("32em", 2)
+                );
 
                 TextField clientName = new TextField();
                 clientName.setAutofocus(true);
@@ -80,22 +102,55 @@ public class OwnersViewer extends VerticalLayout {
                 clientEmail.setPattern("\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b");
                 clientEmail.setValue(owner.getOwnerEmail());
 
+                //TODO Nie działa do końca tak jak powinno
+                TextField clientNIPNumber = new TextField();
+                clientNIPNumber.setLabel("NIP: ");
+//                clientNIPNumber.setReadOnly(true);
+//                if (owner.getOwnerNIPNumber() != "") {
+//                    clientNIPNumber.setValue(owner.getOwnerNIPNumber());
+//                    isClientACompany.setValue(true);
+//                } else {
+//                    clientNIPNumber.setVisible(false);
+//                    isClientACompany.setValue(false);
+//                }
+
                 Checkbox isClientACompany = new Checkbox();
                 isClientACompany.setLabel("Czy klient jest firmą");
                 isClientACompany.setValue(owner.isOwnerACompany());
-
-                TextField clientNIPNumber = new TextField();
-                clientNIPNumber.setLabel("NIP: ");
-                clientNIPNumber.setReadOnly(true);
-                clientNIPNumber.setValue(owner.getOwnerNIPNumber());
-
-                isClientACompany.addClickListener(checkboxClickEvent -> {
-                    if (!isClientACompany.getValue()) {
-                        clientNIPNumber.setReadOnly(true);
+                isClientACompany.addValueChangeListener(changeEvent -> {
+                    if(isClientACompany.getValue() == true){
+                        clientNIPNumber.setVisible(true);
+                        clientNIPNumber.setValue(owner.getOwnerNIPNumber());
                     } else {
-                        clientNIPNumber.setReadOnly(false);
+                        clientNIPNumber.setVisible(false);
                     }
                 });
+
+
+//                isClientACompany.addValueChangeListener(changeEvent -> {
+//                    if (!isClientACompany.getValue()) {
+//                        clientNIPNumber.setVisible(false);
+//
+//                    } else {
+//                        clientNIPNumber.setVisible(true);
+//                        clientNIPNumber.setReadOnly(false);
+//                    }
+//                });
+
+                HorizontalLayout horizontalLayout = new HorizontalLayout();
+
+                if (!owner.getCars().isEmpty()) {
+                    Grid<Car> ownerCars = new Grid<>();
+                    ownerCars.setHeightByRows(true);
+                    ownerCars.addColumn(Car::getPlate).setHeader("Nr rej");
+                    ownerCars.addColumn(Car::getCarBrand).setHeader("Producent");
+                    ownerCars.addColumn(Car::getCarModel).setHeader("Model");
+                    ownerCars.addColumn(Car::getVinNumber).setHeader("VIN");
+                    ownerCars.setItems(owner.getCars());
+                    horizontalLayout.add(ownerCars);
+                    horizontalLayout.setPadding(true);
+
+                }
 
                 Label invisibleLabel = new Label();
 
@@ -115,18 +170,56 @@ public class OwnersViewer extends VerticalLayout {
                     editWindow.close();
                 });
 
-                Button cancelEditingButton = new Button("Anuluj", cancelEvent ->{
+                Button cancelEditingButton = new Button("Anuluj", cancelEvent -> {
                     editWindow.close();
                 });
 
                 editForm.add(clientName, clientSurname, clientAdressStreet, clientAdressCity, clientAdressZipCode,
-                        clientPhoneNumber, clientEmail, isClientACompany, clientNIPNumber, invisibleLabel, saveButton,
-                        cancelEditingButton);
+                        clientPhoneNumber, clientEmail, isClientACompany, clientNIPNumber);
 
-                editWindow.add(editForm);
+                FormLayout buttonLayout = new FormLayout(saveButton, cancelEditingButton);
+
+                editWindow.add(editForm, horizontalLayout, buttonLayout);
                 editWindow.open();
             });
 
+        });
+
+        contextMenu.addItem("Dodaj samochód", event -> {
+            event.getItem().ifPresent(owner -> {
+
+                Dialog dialog = new Dialog();
+                ComboBox<Car> carComboBox = new ComboBox<>();
+                dialog.add(carComboBox);
+                List<Car> cars = new ArrayList<>(carRepository.findAll());
+                carComboBox.setLabel("Wybierz samochód");
+                carComboBox.setItemLabelGenerator(Car::getPlate);
+                carComboBox.setItems(cars.stream().filter(car1 ->
+                        car1.getOwner() == null)
+                        .collect(Collectors.toList()));
+
+                Button save = new Button("Wybierz", eventSave -> {
+                    // Jeśli nie działa to carService zamienić na carRepository
+                    owner.getCars().add(carService.findByPlate(carComboBox.getValue().toString()));
+                    ownerRepository.save(owner);
+
+                    cars.forEach(car -> {
+                                if (car.getPlate() == carComboBox.getValue().getPlate()) {
+                                    car.setOwner(owner);
+                                    carRepository.save(car);
+                                }
+                            }
+                    );
+
+                    dialog.removeAll();
+                    Label label = new Label("Samochód o nr rej.: " + carComboBox.getValue().getPlate() +
+                            " został dodany do " + owner.getOwnerName() + " " + owner.getOwnerSurname());
+                    dialog.add(label);
+                });
+
+                dialog.add(save);
+                dialog.open();
+            });
         });
 
         contextMenu.addItem("Usuń", event -> {
@@ -150,11 +243,16 @@ public class OwnersViewer extends VerticalLayout {
         grid.removeColumnByKey("ownerACompany");
         grid.setColumnReorderingAllowed(true);
 
+        //TODO Nie działa do końca tak jak powinno
         TextField searchField = new TextField();
         searchField.setPlaceholder("Znajdź");
-//        searchField.addInputListener(event -> {
-//            grid.setItems((Owner) ownerRepository.findb);
-//        });
+        searchField.addValueChangeListener(event -> ownerRepository.findAll().stream().filter(owner ->
+                StringUtils.containsIgnoreCase(owner.getOwnerName(), searchField.getValue()))
+        );
+
+        searchField.setValueChangeMode(ValueChangeMode.EAGER);
+
+
         add(searchField, grid);
     }
 
