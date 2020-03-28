@@ -1,41 +1,45 @@
 package com.example.workshopmanager.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private DataSource dataSource;
 
-    @Autowired
-    private UserDetailsService userDetailsService;
+    public SecurityConfig(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
+//        auth.userDetailsService(dataSource);
 
 //        auth
 //                .inMemoryAuthentication()
-//                .withUser("admin").password("{noop}password").roles("ADMIN", "USER")
+//                .withUser("admin").password(passwordEncoder().encode("password")).roles("ADMIN", "USER")
 //                .and()
-//                .withUser("user").password("{noop}password").roles("USER");
+//                .withUser("user").password(passwordEncoder().encode("password")).roles("USER");
 
-//        auth.jdbcAuthentication().dataSource(dataSource)
-//                .usersByUsernameQuery(
-//                        "select username,password, enabled from users where username=?")
-//                .authoritiesByUsernameQuery(
-//                        "select username, role from user_roles where username=?");
+        auth.jdbcAuthentication()
+                .passwordEncoder(passwordEncoder())
+                .dataSource(dataSource)
+//                .withDefaultSchema()
+                .usersByUsernameQuery(
+                        "select username,password, enabled from users where username=?")
+                .authoritiesByUsernameQuery(
+                        "select username, role from users where username=?");
     }
 
     @Override
@@ -44,16 +48,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/addClient", "/addCar", "/allOwners", "/allCars").hasRole("ADMIN")
 //                .antMatchers("/").permitAll()
                 .and()
-                .logout()
+                .logout().logoutSuccessUrl("/index")
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .and().formLogin().permitAll()
+                .and().formLogin().permitAll().defaultSuccessUrl("/index")
                 //.loginPage("/login")
                 .and()
                 .csrf().disable();
     }
 
     @Bean
-    public PasswordEncoder getPasswordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

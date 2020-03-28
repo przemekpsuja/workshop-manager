@@ -12,7 +12,7 @@ import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Route("contact")
-@StyleSheet("/background.css")
+@StyleSheet("background.css")
 public class Contact extends VerticalLayout {
 
     @Autowired

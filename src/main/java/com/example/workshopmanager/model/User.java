@@ -30,8 +30,8 @@ public class User {
     @Column(name = "MAIL", nullable = false, unique = true)
     private String userEmail;
 
-    @Column(name = "ROLES", nullable = false)
-    private String roles;
+    @Column(name = "ROLE", nullable = false)
+    private String role;
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 //    private Set<Authorities> authorities = new HashSet<>();
 
@@ -69,12 +69,12 @@ public class User {
         this.userEmail = userEmail;
     }
 
-    public String getRoles() {
-        return roles;
+    public String getRole() {
+        return role;
     }
 
-    public void setRoles(String roles) {
-        this.roles = roles;
+    public void setRole(String roles) {
+        this.role = role;
     }
 
     //    public Set<Authorities> getAuthorities() {

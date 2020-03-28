@@ -3,16 +3,15 @@ package com.example.workshopmanager.security;
 import com.example.workshopmanager.controller.MailService;
 import com.example.workshopmanager.model.User;
 import com.example.workshopmanager.repository.UserRepository;
-import com.example.workshopmanager.view.Main;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.router.ParentLayout;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.mail.MessagingException;
 
@@ -23,9 +22,10 @@ public class RegistrationForm extends VerticalLayout {
     private final String registrtionMessage = ("Cześć! Witamy Cię w naszym warsztacie");
     private User user;
     private MailService mailService;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public RegistrationForm(UserRepository userRepository, MailService mailService){
+    public RegistrationForm(UserRepository userRepository, MailService mailService, PasswordEncoder passwordEncoder){
         VerticalLayout loginLayout = new VerticalLayout();
 
         TextField userNameField = new TextField();
@@ -49,9 +49,10 @@ public class RegistrationForm extends VerticalLayout {
                         .builder()
                         .userName(userNameField.getValue())
                         .userEmail(userEmailField.getValue())
-                        .userPassword(userPasswordField.getValue())
+//                        .userPassword(userPasswordField.getValue())
+                        .userPassword(passwordEncoder.encode(userPasswordField.getValue()))
                         .enabled(true)
-                        .roles("USER")
+                        .role("USER")
                         .build();
                 userRepository.save(user);
                 try {

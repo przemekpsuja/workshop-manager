@@ -200,7 +200,7 @@ public class OwnersViewer extends VerticalLayout {
 
                 Button save = new Button("Wybierz", eventSave -> {
                     // Jeśli nie działa to carService zamienić na carRepository
-                    owner.getCars().add(carService.findByPlate(carComboBox.getValue().toString()));
+                    owner.getCars().add(carRepository.findByPlate(carComboBox.getValue().toString()));
                     ownerRepository.save(owner);
 
                     cars.forEach(car -> {

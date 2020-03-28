@@ -15,8 +15,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Collection;
 
-@Route("")
-@StyleSheet("/background.css")
+@Route("index")
+@StyleSheet("background.css")
 public class Main extends HorizontalLayout {
 
     public Main() {

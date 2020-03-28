@@ -23,7 +23,7 @@ public class MyUserDetails implements UserDetails {
         this.password = user.getUserPassword();
         this.enable = user.isEnabled();
         this.userEmail = user.getUserEmail();
-        this.authorities = Arrays.stream(user.getRoles().split(","))
+        this.authorities = Arrays.stream(user.getRole().split(","))
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
     }
