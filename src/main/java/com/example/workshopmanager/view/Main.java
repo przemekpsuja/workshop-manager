@@ -111,7 +111,6 @@ public class Main extends HorizontalLayout {
                     editionPrices,
                     contactDetails,
                     logout
-//                    registering
             );
 
             add(appLayout);
