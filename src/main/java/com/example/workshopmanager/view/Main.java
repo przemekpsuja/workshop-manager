@@ -55,7 +55,6 @@ public class Main extends HorizontalLayout {
 
             logout.addMenuItemClickListener(menuItemClickEvent ->
             {
-//                content.getUI().get().navigate("window.open(\"/login\", \"_self\");");
                 UI.getCurrent().getPage().executeJavaScript("window.open(\"/logout\", \"_self\");");
             });
 
@@ -114,6 +113,58 @@ public class Main extends HorizontalLayout {
             );
 
             add(appLayout);
+
+        } else if (authorities.contains(new SimpleGrantedAuthority("USER"))) {
+
+            AppLayout appLayout = new AppLayout();
+            AppLayoutMenu menu = appLayout.createMenu();
+            Image img = new Image("https://i.pinimg.com/originals/72/82/5c/72825cd366980b3ba05c314c9e6e75bb.png",
+                    "Car workshop Logo");
+            img.setHeight("100px");
+            appLayout.setBranding(img);
+            Image mainPicture = new Image("/images/helloImage.png", "hello");
+            mainPicture.setSizeFull();
+
+            AppLayoutMenuItem login = new AppLayoutMenuItem("Zaloguj");
+            login.addMenuItemClickListener(menuItemClickEvent ->
+            {
+                UI.getCurrent().getPage().executeJavaScript("window.open(\"/login\", \"_self\");");
+            });
+
+            AppLayoutMenuItem pricesCustomer = new AppLayoutMenuItem("Cennik", "prices");
+            AppLayoutMenuItem calendar = new AppLayoutMenuItem("Terminarz", "dates");
+            AppLayoutMenuItem contactDetails = new AppLayoutMenuItem("Kontakt", "contact");
+            AppLayoutMenuItem logout = new AppLayoutMenuItem("Wyloguj");
+
+            contactDetails.addMenuItemClickListener(ClickEvent -> {
+                contactDetails.getUI().ifPresent(ui -> ui.navigate("/contact"));
+            });
+
+            pricesCustomer.addMenuItemClickListener(ClickEvent -> {
+                pricesCustomer.getUI().ifPresent(ui -> ui.navigate("/prices"));
+            });
+
+            logout.addMenuItemClickListener(menuItemClickEvent -> {
+                UI.getCurrent().getPage().executeJavaScript("window.open(\"/logout\", \"_self\");");
+            });
+
+            menu.addMenuItems(
+                    pricesCustomer,
+                    calendar,
+                    contactDetails,
+                    logout
+            );
+
+            Component content = new Span(
+
+                    mainPicture
+
+            );
+
+            appLayout.setContent(content);
+
+            add(appLayout);
+
         } else {
             AppLayout appLayout = new AppLayout();
             AppLayoutMenu menu = appLayout.createMenu();

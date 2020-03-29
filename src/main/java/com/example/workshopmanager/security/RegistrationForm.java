@@ -1,10 +1,9 @@
 package com.example.workshopmanager.security;
 
 import com.example.workshopmanager.controller.MailService;
-import com.example.workshopmanager.model.User;
+import com.example.workshopmanager.controller.RegistrationController;
 import com.example.workshopmanager.repository.UserRepository;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.PasswordField;
@@ -12,61 +11,64 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.mail.MessagingException;
-
 @Route("registration")
 public class RegistrationForm extends VerticalLayout {
 
-    private final String registrtionMessage = ("Cześć! Witamy Cię w naszym warsztacie");
-
+    private TextField usernameField;
+    private EmailField userEmailField;
+    private PasswordField userPasswordField;
+    private Button signInButton;
     private UserRepository userRepository;
     private MailService mailService;
     private PasswordEncoder passwordEncoder;
+    private RegistrationController registrationController;
 
-    public RegistrationForm(UserRepository userRepository, MailService mailService, PasswordEncoder passwordEncoder){
+    public RegistrationForm(UserRepository userRepository, MailService mailService, RegistrationController registrationController) {
+
         VerticalLayout loginLayout = new VerticalLayout();
-
-        TextField userNameField = new TextField();
-        userNameField.setRequired(true);
-        userNameField.setPlaceholder("Login");
-        userNameField.setAutoselect(true);
-        EmailField userEmailField = new EmailField();
+        this.usernameField = new TextField();
+        usernameField.setRequired(true);
+        usernameField.setPlaceholder("Login");
+        usernameField.setAutoselect(true);
+        this.userEmailField = new EmailField();
         userEmailField.setErrorMessage("Podaj prawidłowey format maila");
         userEmailField.setPlaceholder("Email");
-        PasswordField userPasswordField = new PasswordField();
+        this.userPasswordField = new PasswordField();
         userPasswordField.setPlaceholder("Hasło");
         userPasswordField.setPattern("^[a-zA-Z0-9]{6,}$");
-        Button signInButton = new Button("Zarejestruj", event -> {
-
-            if(!userNameField.getValue().isEmpty() &&  !userEmailField.getValue().isEmpty() && !userPasswordField.getValue().isEmpty()){
-
-            User user = User
-                    .builder()
-                    .userName(userNameField.getValue())
-                    .userEmail(userEmailField.getValue())
-                    .userPassword(passwordEncoder.encode(userPasswordField.getValue()))
-                    .enabled(true)
-                    .role("USER")
-                    .build();
-            userRepository.save(user);
-            try {
-                mailService.sendMail(userEmailField.getValue(), "Witamy w warsztacie", registrtionMessage,false);
-            } catch (MessagingException e) {
-                e.printStackTrace();
-            }
-
-        } else {
-            Notification error = new Notification("Uzupełnij wszystkie pola") ;
-            add(error);
-        }
-    });
-
-        signInButton.addClickListener(ClickEvent -> {
-            signInButton.getUI().ifPresent(ui -> ui.navigate(""));
+        this.signInButton = new Button("Zarejestruj", buttonClickEvent -> {
+            registrationController.registerUser(usernameField.getValue(), userEmailField.getValue(), userPasswordField.getValue());
+            signInButton.getUI().ifPresent(ui -> ui.navigate("index"));
         });
 
-        add(userNameField, userEmailField, userPasswordField, signInButton);
+//        signInButton.addClickListener(ClickEvent -> {
+//            signInButton.getUI().ifPresent(ui -> ui.navigate(""));
+//        });
 
+        add(usernameField, userEmailField, userPasswordField, signInButton);
     }
 
+    public TextField getUsernameField() {
+        return usernameField;
+    }
+
+    public void setUsernameField(TextField usernameField) {
+        this.usernameField = usernameField;
+    }
+
+    public EmailField getUserEmailField() {
+        return userEmailField;
+    }
+
+    public void setUserEmailField(EmailField userEmailField) {
+        this.userEmailField = userEmailField;
+    }
+
+    public PasswordField getUserPasswordField() {
+        return userPasswordField;
+    }
+
+    public void setUserPasswordField(PasswordField userPasswordField) {
+        this.userPasswordField = userPasswordField;
+    }
 }
