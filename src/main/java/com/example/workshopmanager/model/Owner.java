@@ -38,9 +38,10 @@ public class Owner {
         this.id = id;
     }
 
-    public String getOwnerFullName(){
+    public String getOwnerFullName() {
         return ownerName + " " + ownerSurname;
     }
+
     public String getOwnerName() {
         return ownerName;
     }

@@ -4,8 +4,6 @@ import com.example.workshopmanager.model.Car;
 import com.example.workshopmanager.model.CarType;
 import com.example.workshopmanager.model.EngineType;
 import com.example.workshopmanager.repository.CarRepository;
-import com.example.workshopmanager.view.Main;
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -13,9 +11,7 @@ import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.router.ParentLayout;
 import com.vaadin.flow.router.Route;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Route("addCar")
 public class CarAdd extends VerticalLayout {
@@ -69,9 +65,9 @@ public class CarAdd extends VerticalLayout {
         Label invisibleLabel = new Label();
 
         Button saveButton = new Button("Zapisz", saveEvent -> {
-            if(!carBrandField.getValue().isEmpty() && !carModelField.getValue().isEmpty() &&
+            if (!carBrandField.getValue().isEmpty() && !carModelField.getValue().isEmpty() &&
                     !carPlateField.getValue().isEmpty() && !carTypeField.isEmpty() && !carBuildYear.getValue().isEmpty() &&
-            !carEngineCapacityField.getValue().isEmpty() && !carEngineTypeField.isEmpty()) {
+                    !carEngineCapacityField.getValue().isEmpty() && !carEngineTypeField.isEmpty()) {
                 Car car = new Car().builder()
                         .carBrand(carBrandField.getValue())
                         .carModel(carModelField.getValue())

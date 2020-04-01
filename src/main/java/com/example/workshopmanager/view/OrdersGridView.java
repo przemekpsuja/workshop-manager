@@ -20,7 +20,6 @@ public class OrdersGridView extends VerticalLayout {
 //        ordersGrid.addColumn(RepairOrder::getStatus).setHeader("Samochód");
 //        ordersGrid.addColumn(RepairOrder::getCar).setHeader("Samochód");
 //        ordersGrid.addColumn(RepairOrder::getCar).setHeader("Samochód");
-
         add(ordersGrid);
     }
 }

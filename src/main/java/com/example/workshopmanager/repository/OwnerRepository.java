@@ -11,5 +11,4 @@ public interface OwnerRepository extends JpaRepository<Owner, Long> {
 //    List<Owner> findAllByOwnerNameOrOwnerSurnameOrOwnerNIPNumberOrOwnerPhoneNumberContains(String s);
     @Query(value = "SELECT o FROM owners o WHERE o.ownerName = ?1 and o.ownerSurname = ?2")
     Owner findByOwnerNameAndOwnerSurname(String name, String surname);
-
 }

@@ -29,7 +29,6 @@ import java.util.stream.Collectors;
 @Route("allOwners")
 public class OwnersViewer extends VerticalLayout {
 
-    private OwnerAdder ownerAdder;
     private OwnerRepository ownerRepository;
     private CarRepository carRepository;
     private CarService carService;
@@ -118,7 +117,7 @@ public class OwnersViewer extends VerticalLayout {
                 isClientACompany.setLabel("Czy klient jest firmą");
                 isClientACompany.setValue(owner.isOwnerACompany());
                 isClientACompany.addValueChangeListener(changeEvent -> {
-                    if(isClientACompany.getValue() == true){
+                    if (isClientACompany.getValue() == true) {
                         clientNIPNumber.setVisible(true);
                         clientNIPNumber.setValue(owner.getOwnerNIPNumber());
                     } else {
@@ -126,11 +125,9 @@ public class OwnersViewer extends VerticalLayout {
                     }
                 });
 
-
 //                isClientACompany.addValueChangeListener(changeEvent -> {
 //                    if (!isClientACompany.getValue()) {
 //                        clientNIPNumber.setVisible(false);
-//
 //                    } else {
 //                        clientNIPNumber.setVisible(true);
 //                        clientNIPNumber.setReadOnly(false);
@@ -149,7 +146,6 @@ public class OwnersViewer extends VerticalLayout {
                     ownerCars.setItems(owner.getCars());
                     horizontalLayout.add(ownerCars);
                     horizontalLayout.setPadding(true);
-
                 }
 
                 Label invisibleLabel = new Label();
@@ -199,7 +195,6 @@ public class OwnersViewer extends VerticalLayout {
                         .collect(Collectors.toList()));
 
                 Button save = new Button("Wybierz", eventSave -> {
-                    // Jeśli nie działa to carService zamienić na carRepository
                     owner.getCars().add(carRepository.findByPlate(carComboBox.getValue().toString()));
                     ownerRepository.save(owner);
 
@@ -249,13 +244,9 @@ public class OwnersViewer extends VerticalLayout {
         searchField.addValueChangeListener(event -> ownerRepository.findAll().stream().filter(owner ->
                 StringUtils.containsIgnoreCase(owner.getOwnerName(), searchField.getValue()))
         );
-
         searchField.setValueChangeMode(ValueChangeMode.EAGER);
-
-
         add(searchField, grid);
     }
-
     //TODO add mouse item focus listener,
     //TODO add search field and method to searching
 }

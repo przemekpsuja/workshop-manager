@@ -132,7 +132,7 @@ public class CarsViewer extends VerticalLayout {
         add(grid);
     }
 
-    private void removeUnusedColumn(){
+    private void removeUnusedColumn() {
         grid.removeColumnByKey("accetableCarWeight");
         grid.removeColumnByKey("accetableCarSetWeight");
         grid.removeColumnByKey("carOwnWeight");
@@ -159,5 +159,4 @@ public class CarsViewer extends VerticalLayout {
         grid.removeColumnByKey("engineCapacity");
         grid.removeColumnByKey("maxPowerInKW");
     }
-
 }

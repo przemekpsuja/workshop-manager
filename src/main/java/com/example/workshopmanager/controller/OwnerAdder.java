@@ -140,10 +140,7 @@ public class OwnerAdder extends VerticalLayout {
 //                    notification.setPosition(Notification.Position.MIDDLE);
             }
         });
-
-
         add(clientName, clientSurname, clientAdressStreet, clientAdressCity, clientAdressZipCode, clientPhoneNumber,
                 clientEmail, isClientACompany, clientNIPNumber, submitButton);
     }
-
 }

@@ -17,7 +17,7 @@ public class Contact extends VerticalLayout {
 
     @Autowired
     public Contact() {
-          VerticalLayout contacLayout = new VerticalLayout();
+        VerticalLayout contacLayout = new VerticalLayout();
         Label data1 = new Label("Dane kontaktowe:");
         data1.getStyle().set("font-size", "4vw");
         Label data2 = new Label("U Przema - mechanik");
@@ -39,7 +39,6 @@ public class Contact extends VerticalLayout {
         contacLayout.setWidth("100%");
         contacLayout.setHeight("70%");
 
-
         Button returnToMain = new Button("Do strony głównej", new Icon(VaadinIcon.ARROW_LEFT));
         returnToMain.getStyle().set("font-size", "2vw");
         returnToMain.addClickListener(event -> {
@@ -48,5 +47,4 @@ public class Contact extends VerticalLayout {
 
         add(contacLayout, returnToMain);
     }
-
 }

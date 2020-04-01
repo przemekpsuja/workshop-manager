@@ -17,5 +17,4 @@ public class CarService {
         return carRepository.findById(plate)
                 .orElseThrow(() -> new RuntimeException("Car with this plate doesn't exist"));
     }
-
 }

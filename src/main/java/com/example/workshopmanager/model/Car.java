@@ -1,9 +1,14 @@
 package com.example.workshopmanager.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import java.util.Date;
 
 @Component
@@ -17,7 +22,6 @@ public class Car {
     private String plate;
     private Date firstRegistrationDate;
     @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "owner_id")
     private Owner owner;
     private String carBrand;
     private CarType carType;
@@ -89,7 +93,6 @@ public class Car {
     public void setEngineType(EngineType engineType) {
         this.engineType = engineType;
     }
-
 
 
     public String getCarModel() {

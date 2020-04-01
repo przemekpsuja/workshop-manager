@@ -46,7 +46,6 @@ public class Main extends HorizontalLayout {
             AppLayoutMenuItem seeCustomers = new AppLayoutMenuItem("Lista klientów", "allOwners");
             AppLayoutMenuItem seeAllCars = new AppLayoutMenuItem("Lista samochodów", "allCars");
 
-
             Component content = new Span(
                     mainPicture
             );
@@ -156,15 +155,11 @@ public class Main extends HorizontalLayout {
             );
 
             Component content = new Span(
-
                     mainPicture
-
             );
 
             appLayout.setContent(content);
-
             add(appLayout);
-
         } else {
             AppLayout appLayout = new AppLayout();
             AppLayoutMenu menu = appLayout.createMenu();
@@ -203,13 +198,10 @@ public class Main extends HorizontalLayout {
             );
 
             Component content = new Span(
-
                     mainPicture
-
             );
 
             appLayout.setContent(content);
-
             add(appLayout);
         }
     }

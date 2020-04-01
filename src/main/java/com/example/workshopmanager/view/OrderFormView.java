@@ -11,7 +11,7 @@ import com.example.workshopmanager.repository.RepairOrderRepository;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
-import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
@@ -30,15 +30,23 @@ public class OrderFormView extends FormLayout {
 
 
     public OrderFormView(OwnerRepository ownerRepository, RepairOrderRepository repairOrderRepository, CarRepository carRepository, RepairOrderController repairOrderController) {
-        Label label = new Label();
         ComboBox<Owner> ownerPicker = new ComboBox<>();
         List<Owner> ownerList = new ArrayList<>(ownerRepository.findAll());
         ownerPicker.setItems(ownerList);
         ownerPicker.setItemLabelGenerator(Owner::getOwnerFullName);
+        ownerPicker.setLabel("Zlecający");
         ComboBox<Car> carPicker = new ComboBox<>();
         List<Car> carsList = new ArrayList<>(carRepository.findAll());
         carPicker.setItems(carsList);
         carPicker.setItemLabelGenerator(Car::getPlate);
+        carPicker.setLabel("Samochód");
+//        Label label1 = new Label();
+//        label1.setText("Tel. " + ownerPicker.getValue().getOwnerPhoneNumber());
+//        Label label2= new Label();
+//        label2.setText(carPicker.getValue().getCarBrand() + " " + carPicker.getValue().getCarModel() + ", rok: "
+//        + carPicker.getValue().getProductionDate() + ", moc: " + carPicker.getValue().getMaxPowerInKW() + "kW, VIN: "
+//        + carPicker.getValue().getVinNumber());
+        VerticalLayout vl = new VerticalLayout();
         TextField carBrand = new TextField();
         carBrand.setReadOnly(true);
         TextField carModel = new TextField();
@@ -58,6 +66,9 @@ public class OrderFormView extends FormLayout {
         TextField carPower = new TextField();
         carPower.setReadOnly(true);
         TextArea description = new TextArea();
+        description.setMinWidth("800px");
+        description.setHeight("350px");
+        description.setLabel("Opis zlecenia");
         Button saveButton = new Button("Zapisz", buttonClickEvent -> {
             RepairOrder order = new RepairOrder();
             order.setLocalDateTime();
@@ -67,10 +78,9 @@ public class OrderFormView extends FormLayout {
                     ownerPicker.getValue().getOwnerSurname()));
             order.setCar(carRepository.findByPlate(carPicker.getValue().getPlate()));
             order.setDescription(description.getValue());
-
             repairOrderRepository.save(order);
         });
-        add(label, ownerPicker, carPicker, description, saveButton);
+        vl.add(description, saveButton);
+        add(ownerPicker, carPicker, vl);
     }
-
 }

@@ -66,12 +66,9 @@ public class PricesAdder extends VerticalLayout {
                 })
         ).setHeader("Opcje:");
 
-
         allPriceDBGrid.setHeightByRows(true);
-
         allPriceDBGrid.setItems(priceRepository.findAll());
         add(allPriceDBGrid);
-
 
         HorizontalLayout horizontalAdding = new HorizontalLayout();
         TextField textFieldServiceName = new TextField("Nazwa usługi:");
@@ -87,7 +84,6 @@ public class PricesAdder extends VerticalLayout {
             UI.getCurrent().navigate("");
         });
 
-
         saveButton.addClickListener(clickEvent -> {
             Price price = new Price();
             price.setPrice(numberFieldPrice.getValue());
@@ -97,23 +93,17 @@ public class PricesAdder extends VerticalLayout {
             allPriceDBGrid.setItems(priceRepository.findAll());
             add(allPriceDBGrid);
 
-
             Label content = new Label(
                     "Dodałeś nowy produkt!");
             Notification notification = new Notification(content);
             notification.setDuration(500);
             notification.setPosition(Notification.Position.MIDDLE);
             notification.open();
-
-
         });
 
         horizontalAdding.add(textFieldServiceName, numberFieldPrice, comboBox, saveButton);
         horizontalAdding.setWidth("100%");
 
-
         add(horizontalAdding, allPriceDBGrid, returnToMain);
-
-
     }
 }

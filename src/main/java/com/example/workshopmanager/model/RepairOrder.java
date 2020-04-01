@@ -1,6 +1,5 @@
 package com.example.workshopmanager.model;
 
-import com.example.workshopmanager.controller.RepairOrderController;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -12,6 +11,7 @@ import java.util.Optional;
 @Component
 @Entity(name = "orders")
 @AllArgsConstructor
+@NoArgsConstructor
 public class RepairOrder {
 
     @Id
@@ -25,40 +25,6 @@ public class RepairOrder {
     private Car car;
     private StatusOrder status;
     private String description = "";
-    @Transient
-    private String temp;
-    @Transient
-    private RepairOrderController repairOrderController;
-
-    public RepairOrder(){
-    }
-//    public RepairOrder(Owner owner, Car car, String description) {
-//        localDateTime = LocalDateTime.now();
-//        int currentMonthValue = localDateTime.getMonthValue();
-//        int currentYearValue = localDateTime.getYear();
-//        if(repairOrderRepository.findLastOrderNumber() == null) {
-//            temp = "0/0/0";
-//        } else {
-//            temp = repairOrderRepository.findLastOrderNumber().toString();
-//        }
-//        String[] splitedTemp = temp.split("/");
-//        int tempCounter = Integer.parseInt(splitedTemp[0]);
-//        int tempMonth = Integer.parseInt(splitedTemp[1]);
-//        int tempYear = Integer.parseInt(splitedTemp[2]);
-//        //TODO zerowanie licznika kazdego nowego miesiaca- nie działa!!!!
-//        if (tempCounter != 1 && (currentMonthValue > tempMonth || currentYearValue > tempYear)) {
-//            tempCounter = 1;
-//            orderNumber = tempCounter + "/" + currentMonthValue + "/" + currentYearValue;
-//        } else {
-//            tempCounter++;
-//            orderNumber = tempCounter + "/" + localDateTime.getMonthValue() + "/" + localDateTime.getYear();
-//        }
-//        repairOrderController.orderNumberGenerator();
-//        this.status = StatusOrder.OCZEKUJE;
-//        this.owner = owner;
-//        this.car = car;
-//        this.description = description;
-//    }
 
     public Long getId() {
         return id;

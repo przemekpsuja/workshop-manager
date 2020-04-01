@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RepairOrderRepository extends JpaRepository<RepairOrder, Long> {
+
     @Query(value = "SELECT order_number FROM orders WHERE orders.id = (SELECT MAX(orders.id) FROM orders)", nativeQuery = true)
     String findLastOrderNumber();
 }

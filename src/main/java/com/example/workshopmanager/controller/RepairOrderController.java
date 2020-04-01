@@ -17,12 +17,12 @@ public class RepairOrderController {
         this.repairOrderRepository = repairOrderRepository;
     }
 
-    public String orderNumberGenerator(){
+    public String orderNumberGenerator() {
         String temp = "";
         localDateTime = LocalDateTime.now();
         int currentMonthValue = localDateTime.getMonthValue();
         int currentYearValue = localDateTime.getYear();
-        if(repairOrderRepository.findLastOrderNumber() == null) {
+        if (repairOrderRepository.findLastOrderNumber() == null) {
             temp = "0/0/0";
         } else {
             temp = repairOrderRepository.findLastOrderNumber();
