@@ -1,10 +1,12 @@
 package com.example.workshopmanager.model;
 
 import lombok.*;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.util.Date;
 
+@Component
 @Entity(name = "cars")
 @Builder
 @AllArgsConstructor

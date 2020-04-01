@@ -23,7 +23,6 @@ public class CarAdd extends VerticalLayout {
     private final String ERROR_MESSAGE = "Nie zapisano samochodu. Popraw wymagane pola";
     private Car car;
 
-    @Autowired
     public CarAdd(CarRepository carRepository) {
 
         FormLayout formLayout = new FormLayout();
@@ -31,7 +30,6 @@ public class CarAdd extends VerticalLayout {
         TextField carPlateField = new TextField();
         carPlateField.setLabel("Nr rejestracyjny");
         carPlateField.setRequired(true);
-
 
         TextField carBrandField = new TextField();
         carBrandField.setLabel("Marka");
@@ -88,6 +86,16 @@ public class CarAdd extends VerticalLayout {
 
                 carRepository.save(car);
 
+                carBrandField.clear();
+                carModelField.clear();
+                carTypeField.clear();
+                carPlateField.clear();
+                carBuildYear.clear();
+                carVinNumberField.clear();
+                carEngineCapacityField.clear();
+                carEngineTypeField.clear();
+                carMaxPowerField.clear();
+
                 Label content = new Label("Samochód o nr rej: " + car.getPlate() + " " + "został dodany do bazy");
                 Notification notification = new Notification(content);
                 notification.setDuration(4500);
@@ -116,4 +124,5 @@ public class CarAdd extends VerticalLayout {
 
         add(formLayout);
     }
+
 }

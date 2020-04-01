@@ -15,17 +15,14 @@ import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Route("allCars")
 public class CarsViewer extends VerticalLayout {
 
     private CarAdd carAdd;
+    private Grid<Car> grid = new Grid<>(Car.class);
 
-    @Autowired
     public CarsViewer(CarRepository carRepository) {
-        Grid<Car> grid = new Grid<>(Car.class);
-
         grid.getColumnByKey("plate");
         grid.addColumn(Car::getCarBrand).setHeader("Marka");
         grid.addColumn(Car::getCarModel).setHeader("Model");
@@ -106,7 +103,6 @@ public class CarsViewer extends VerticalLayout {
                     car.setEngineCapacity(carEngineCapacityField.getValue());
                     car.setMaxPowerInKW(carMaxPowerField.getValue());
                     car.setEngineType(carEngineTypeField.getValue());
-
                     carRepository.save(car);
                     grid.setItems(carRepository.findAll());
                     editWindow.close();
@@ -131,6 +127,12 @@ public class CarsViewer extends VerticalLayout {
             });
         });
 
+        removeUnusedColumn();
+
+        add(grid);
+    }
+
+    private void removeUnusedColumn(){
         grid.removeColumnByKey("accetableCarWeight");
         grid.removeColumnByKey("accetableCarSetWeight");
         grid.removeColumnByKey("carOwnWeight");
@@ -156,8 +158,6 @@ public class CarsViewer extends VerticalLayout {
         grid.removeColumnByKey("engineType");
         grid.removeColumnByKey("engineCapacity");
         grid.removeColumnByKey("maxPowerInKW");
-
-        add(grid);
     }
 
 }
