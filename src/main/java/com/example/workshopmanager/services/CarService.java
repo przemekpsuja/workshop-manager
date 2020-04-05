@@ -2,6 +2,7 @@ package com.example.workshopmanager.services;
 
 import com.example.workshopmanager.model.Car;
 import com.example.workshopmanager.repository.CarRepository;
+import elemental.json.impl.JsonUtil;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,9 +14,8 @@ public class CarService {
         this.carRepository = carRepository;
     }
 
-    public Car findByPlate(final String plate) {
+    public Car  findByPlate(final String plate) {
         return carRepository.findById(plate)
                 .orElseThrow(() -> new RuntimeException("Car with this plate doesn't exist"));
     }
-
 }
