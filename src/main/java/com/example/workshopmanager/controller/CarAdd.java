@@ -13,7 +13,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 
-@Route("addCar")
+@Route("add-car")
 public class CarAdd extends VerticalLayout {
 
     private final String ERROR_MESSAGE = "Nie zapisano samochodu. Popraw wymagane pola";

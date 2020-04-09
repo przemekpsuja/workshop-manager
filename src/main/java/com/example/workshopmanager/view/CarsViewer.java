@@ -16,7 +16,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 
-@Route("allCars")
+@Route("all-cars")
 public class CarsViewer extends VerticalLayout {
 
     private CarAdd carAdd;

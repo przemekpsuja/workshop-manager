@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 
-@Route("addClient")
+@Route("add-client")
 public class OwnerAdder extends VerticalLayout {
 
     private Owner owner;

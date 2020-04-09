@@ -19,7 +19,7 @@ import com.vaadin.flow.router.Route;
 import java.util.ArrayList;
 import java.util.List;
 
-@Route("addOrder")
+@Route("add-order")
 public class OrderFormView extends FormLayout {
 
     private RepairOrder repairOrder;

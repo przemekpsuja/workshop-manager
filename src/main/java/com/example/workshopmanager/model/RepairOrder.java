@@ -46,8 +46,24 @@ public class RepairOrder {
         this.owner = owner;
     }
 
+    public String getOwnerFullname() {
+        return owner.getOwnerFullName();
+    }
+
     public Car getCar() {
         return car;
+    }
+
+    public String getCarPlate() {
+        return car.getPlate();
+    }
+
+    public String getCarBrand() {
+        return car.getCarBrand();
+    }
+
+    public String getCarModel() {
+        return car.getCarModel();
     }
 
     public void setCar(Car car) {

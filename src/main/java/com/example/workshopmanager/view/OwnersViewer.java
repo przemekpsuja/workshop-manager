@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Route("allOwners")
+@Route("all-owners")
 public class OwnersViewer extends VerticalLayout {
 
     private OwnerRepository ownerRepository;
