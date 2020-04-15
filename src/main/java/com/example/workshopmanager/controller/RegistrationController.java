@@ -50,5 +50,4 @@ public class RegistrationController {
             registrationForm.add(error);
         }
     }
-
 }

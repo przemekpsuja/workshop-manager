@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
 //                .antMatchers("/").hasRole("USER")
-                .antMatchers("/addClient", "/addCar", "/allOwners", "/allCars").hasRole("ADMIN")
+                .antMatchers("/add-client", "/add-car", "/all-owners", "/all-cars", "/add-order", "/all-orders").hasRole("ADMIN")
                 .and()
                 .logout().logoutSuccessUrl("/index")
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))

@@ -11,5 +11,4 @@ import java.util.List;
 public interface PriceRepository extends JpaRepository<Price, Long> {
 
     List<Price> findPriceByPriceCategory(PriceCategory priceCategory);
-
 }

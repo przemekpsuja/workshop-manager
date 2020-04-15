@@ -13,7 +13,6 @@ public class Authorities {
     @JoinColumn(name = "USERNAME")
     private User user;
 
-
     public String getAuthority() {
         return authority;
     }

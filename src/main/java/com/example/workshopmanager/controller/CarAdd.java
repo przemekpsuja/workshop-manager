@@ -4,8 +4,6 @@ import com.example.workshopmanager.model.Car;
 import com.example.workshopmanager.model.CarType;
 import com.example.workshopmanager.model.EngineType;
 import com.example.workshopmanager.repository.CarRepository;
-import com.example.workshopmanager.view.Main;
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -13,17 +11,14 @@ import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.router.ParentLayout;
 import com.vaadin.flow.router.Route;
-import org.springframework.beans.factory.annotation.Autowired;
 
-@Route("addCar")
+@Route("add-car")
 public class CarAdd extends VerticalLayout {
 
     private final String ERROR_MESSAGE = "Nie zapisano samochodu. Popraw wymagane pola";
     private Car car;
 
-    @Autowired
     public CarAdd(CarRepository carRepository) {
 
         FormLayout formLayout = new FormLayout();
@@ -31,7 +26,6 @@ public class CarAdd extends VerticalLayout {
         TextField carPlateField = new TextField();
         carPlateField.setLabel("Nr rejestracyjny");
         carPlateField.setRequired(true);
-
 
         TextField carBrandField = new TextField();
         carBrandField.setLabel("Marka");
@@ -71,9 +65,9 @@ public class CarAdd extends VerticalLayout {
         Label invisibleLabel = new Label();
 
         Button saveButton = new Button("Zapisz", saveEvent -> {
-            if(!carBrandField.getValue().isEmpty() && !carModelField.getValue().isEmpty() &&
+            if (!carBrandField.getValue().isEmpty() && !carModelField.getValue().isEmpty() &&
                     !carPlateField.getValue().isEmpty() && !carTypeField.isEmpty() && !carBuildYear.getValue().isEmpty() &&
-            !carEngineCapacityField.getValue().isEmpty() && !carEngineTypeField.isEmpty()) {
+                    !carEngineCapacityField.getValue().isEmpty() && !carEngineTypeField.isEmpty()) {
                 Car car = new Car().builder()
                         .carBrand(carBrandField.getValue())
                         .carModel(carModelField.getValue())
@@ -87,6 +81,16 @@ public class CarAdd extends VerticalLayout {
                         .build();
 
                 carRepository.save(car);
+
+                carBrandField.clear();
+                carModelField.clear();
+                carTypeField.clear();
+                carPlateField.clear();
+                carBuildYear.clear();
+                carVinNumberField.clear();
+                carEngineCapacityField.clear();
+                carEngineTypeField.clear();
+                carMaxPowerField.clear();
 
                 Label content = new Label("Samochód o nr rej: " + car.getPlate() + " " + "został dodany do bazy");
                 Notification notification = new Notification(content);
@@ -116,4 +120,5 @@ public class CarAdd extends VerticalLayout {
 
         add(formLayout);
     }
+
 }
