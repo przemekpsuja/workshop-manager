@@ -5,18 +5,25 @@ import com.example.workshopmanager.repository.RepairOrderRepository;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.Route;
 
 @Route("all-orders")
 public class OrdersGridView extends VerticalLayout {
 
     private RepairOrderRepository repairOrderRepository;
-
     private Grid<RepairOrder> ordersGrid = new Grid<>();
 
     public OrdersGridView(RepairOrderRepository repairOrderRepository, RepairOrder repairOrder) {
-        ordersGrid.setMultiSort(true);
-        ordersGrid.addThemeVariants(GridVariant.LUMO_NO_ROW_BORDERS, GridVariant.LUMO_ROW_STRIPES);
+        TextField search = new TextField();
+        search.setPlaceholder("Szukaj...");
+        search.setClearButtonVisible(true);
+        search.setValueChangeMode(ValueChangeMode.EAGER);
+        search.addValueChangeListener(event -> {
+        //TODO implement searching method
+
+        });
         ordersGrid.addColumn(RepairOrder::getOrderNumber).setHeader("Nr zlecenia");
         ordersGrid.addColumn(RepairOrder::getStatus).setHeader("Status");
         ordersGrid.addColumn(RepairOrder::getDescription).setHeader("Opis");
@@ -25,7 +32,9 @@ public class OrdersGridView extends VerticalLayout {
         ordersGrid.addColumn(RepairOrder::getCarModel).setHeader("Model");
         ordersGrid.addColumn(RepairOrder::getOwnerFullname).setHeader("Zlecający");
         ordersGrid.setItems(repairOrderRepository.findAll());
-
-        add(ordersGrid);
+        ordersGrid.setMultiSort(true);
+        ordersGrid.addThemeVariants(GridVariant.LUMO_NO_ROW_BORDERS, GridVariant.LUMO_ROW_STRIPES);
+        ordersGrid.addContextMenu();
+        add(search, ordersGrid);
     }
 }

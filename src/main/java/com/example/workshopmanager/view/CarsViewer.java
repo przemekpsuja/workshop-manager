@@ -10,6 +10,7 @@ import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.grid.contextmenu.GridContextMenu;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -23,6 +24,7 @@ public class CarsViewer extends VerticalLayout {
     private Grid<Car> grid = new Grid<>(Car.class);
 
     public CarsViewer(CarRepository carRepository) {
+        grid.addThemeVariants(GridVariant.LUMO_NO_ROW_BORDERS, GridVariant.LUMO_ROW_STRIPES);
         grid.getColumnByKey("plate");
         grid.addColumn(Car::getCarBrand).setHeader("Marka");
         grid.addColumn(Car::getCarModel).setHeader("Model");

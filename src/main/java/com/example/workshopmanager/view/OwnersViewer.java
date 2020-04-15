@@ -12,6 +12,7 @@ import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.grid.contextmenu.GridContextMenu;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -41,6 +42,7 @@ public class OwnersViewer extends VerticalLayout {
 
         Grid<Owner> grid = new Grid<>(Owner.class);
         grid.getColumnByKey("id").setWidth("30px");
+        grid.addThemeVariants(GridVariant.LUMO_NO_ROW_BORDERS, GridVariant.LUMO_ROW_STRIPES);
         Grid.Column<Owner> ownerNameColumn = grid.addColumn(Owner::getOwnerName).setHeader("Imię");
         grid.addColumn(Owner::getOwnerSurname).setHeader("Nazwisko");
         grid.addColumn(Owner::getOwnerAdressStreet).setHeader("Ulica");
