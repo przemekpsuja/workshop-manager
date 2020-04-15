@@ -13,7 +13,6 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -24,11 +23,8 @@ public class Prices extends Div {
 
     @Autowired
     public Prices(PriceRepository priceRepository) {
-
         this.priceRepository = priceRepository;
-
         Accordion accordion = new Accordion();
-
         Grid<Price> diagnosticsG = new Grid<>(Price.class);
         diagnosticsG.removeColumnByKey("id");
         diagnosticsG.removeColumnByKey("price");

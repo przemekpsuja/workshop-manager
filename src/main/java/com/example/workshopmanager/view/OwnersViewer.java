@@ -12,6 +12,7 @@ import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.grid.contextmenu.GridContextMenu;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -26,10 +27,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Route("allOwners")
+@Route("all-owners")
 public class OwnersViewer extends VerticalLayout {
 
-    private OwnerAdder ownerAdder;
     private OwnerRepository ownerRepository;
     private CarRepository carRepository;
     private CarService carService;
@@ -42,6 +42,7 @@ public class OwnersViewer extends VerticalLayout {
 
         Grid<Owner> grid = new Grid<>(Owner.class);
         grid.getColumnByKey("id").setWidth("30px");
+        grid.addThemeVariants(GridVariant.LUMO_NO_ROW_BORDERS, GridVariant.LUMO_ROW_STRIPES);
         Grid.Column<Owner> ownerNameColumn = grid.addColumn(Owner::getOwnerName).setHeader("Imię");
         grid.addColumn(Owner::getOwnerSurname).setHeader("Nazwisko");
         grid.addColumn(Owner::getOwnerAdressStreet).setHeader("Ulica");
@@ -118,7 +119,7 @@ public class OwnersViewer extends VerticalLayout {
                 isClientACompany.setLabel("Czy klient jest firmą");
                 isClientACompany.setValue(owner.isOwnerACompany());
                 isClientACompany.addValueChangeListener(changeEvent -> {
-                    if(isClientACompany.getValue() == true){
+                    if (isClientACompany.getValue() == true) {
                         clientNIPNumber.setVisible(true);
                         clientNIPNumber.setValue(owner.getOwnerNIPNumber());
                     } else {
@@ -126,11 +127,9 @@ public class OwnersViewer extends VerticalLayout {
                     }
                 });
 
-
 //                isClientACompany.addValueChangeListener(changeEvent -> {
 //                    if (!isClientACompany.getValue()) {
 //                        clientNIPNumber.setVisible(false);
-//
 //                    } else {
 //                        clientNIPNumber.setVisible(true);
 //                        clientNIPNumber.setReadOnly(false);
@@ -149,7 +148,6 @@ public class OwnersViewer extends VerticalLayout {
                     ownerCars.setItems(owner.getCars());
                     horizontalLayout.add(ownerCars);
                     horizontalLayout.setPadding(true);
-
                 }
 
                 Label invisibleLabel = new Label();
@@ -199,7 +197,6 @@ public class OwnersViewer extends VerticalLayout {
                         .collect(Collectors.toList()));
 
                 Button save = new Button("Wybierz", eventSave -> {
-                    // Jeśli nie działa to carService zamienić na carRepository
                     owner.getCars().add(carRepository.findByPlate(carComboBox.getValue().toString()));
                     ownerRepository.save(owner);
 
@@ -249,13 +246,9 @@ public class OwnersViewer extends VerticalLayout {
         searchField.addValueChangeListener(event -> ownerRepository.findAll().stream().filter(owner ->
                 StringUtils.containsIgnoreCase(owner.getOwnerName(), searchField.getValue()))
         );
-
         searchField.setValueChangeMode(ValueChangeMode.EAGER);
-
-
         add(searchField, grid);
     }
-
     //TODO add mouse item focus listener,
     //TODO add search field and method to searching
 }

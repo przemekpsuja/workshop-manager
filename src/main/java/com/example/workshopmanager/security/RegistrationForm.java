@@ -41,10 +41,6 @@ public class RegistrationForm extends VerticalLayout {
             signInButton.getUI().ifPresent(ui -> ui.navigate("index"));
         });
 
-//        signInButton.addClickListener(ClickEvent -> {
-//            signInButton.getUI().ifPresent(ui -> ui.navigate(""));
-//        });
-
         add(usernameField, userEmailField, userPasswordField, signInButton);
     }
 

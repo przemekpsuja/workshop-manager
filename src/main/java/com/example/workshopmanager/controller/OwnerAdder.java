@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 
-@Route("addClient")
+@Route("add-client")
 public class OwnerAdder extends VerticalLayout {
 
     private Owner owner;
@@ -140,10 +140,7 @@ public class OwnerAdder extends VerticalLayout {
 //                    notification.setPosition(Notification.Position.MIDDLE);
             }
         });
-
-
         add(clientName, clientSurname, clientAdressStreet, clientAdressCity, clientAdressZipCode, clientPhoneNumber,
                 clientEmail, isClientACompany, clientNIPNumber, submitButton);
     }
-
 }

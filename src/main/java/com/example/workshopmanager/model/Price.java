@@ -5,7 +5,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-
 @Entity
 public class Price {
 
@@ -49,5 +48,4 @@ public class Price {
     public void setPrice(Double price) {
         this.price = price;
     }
-
 }

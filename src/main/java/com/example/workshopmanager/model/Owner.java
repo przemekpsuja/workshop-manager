@@ -1,6 +1,8 @@
 package com.example.workshopmanager.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -34,6 +36,10 @@ public class Owner {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getOwnerFullName() {
+        return ownerName + " " + ownerSurname;
     }
 
     public String getOwnerName() {

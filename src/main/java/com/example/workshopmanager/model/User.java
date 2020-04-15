@@ -32,10 +32,6 @@ public class User {
 
     @Column(name = "ROLE", nullable = false)
     private String role;
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-//    private Set<Authorities> authorities = new HashSet<>();
-
-
 
     public String getUserName() {
         return userName;
@@ -76,5 +72,4 @@ public class User {
     public void setRole(String roles) {
         this.role = role;
     }
-
 }

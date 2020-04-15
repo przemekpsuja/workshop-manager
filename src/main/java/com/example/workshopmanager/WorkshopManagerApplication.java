@@ -11,5 +11,4 @@ public class WorkshopManagerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(WorkshopManagerApplication.class, args);
 	}
-
 }

@@ -43,9 +43,10 @@ public class Main extends HorizontalLayout {
             AppLayoutMenuItem editionPrices = new AppLayoutMenuItem("Zarządzaj cenami", "prices-add");
             AppLayoutMenuItem addCars = new AppLayoutMenuItem("Dodaj samochód", "addCar");
             AppLayoutMenuItem addCustomer = new AppLayoutMenuItem("Dodaj klienta", "addClient");
-            AppLayoutMenuItem seeCustomers = new AppLayoutMenuItem("Lista klientów", "allOwners");
-            AppLayoutMenuItem seeAllCars = new AppLayoutMenuItem("Lista samochodów", "allCars");
-
+            AppLayoutMenuItem allCustomersView = new AppLayoutMenuItem("Lista klientów", "allOwners");
+            AppLayoutMenuItem allCarsView = new AppLayoutMenuItem("Lista samochodów", "allCars");
+            AppLayoutMenuItem addOrder = new AppLayoutMenuItem("Nowe zlecenie", "add-order");
+            AppLayoutMenuItem allOrderView = new AppLayoutMenuItem("Lista Zleceń", "all-orders");
 
             Component content = new Span(
                     mainPicture
@@ -62,15 +63,15 @@ public class Main extends HorizontalLayout {
                 calendar.getUI().ifPresent(ui -> ui.navigate("/dates"));
             });
 
-            seeAllCars.addMenuItemClickListener(ClickEvent -> {
+            allCarsView.addMenuItemClickListener(ClickEvent -> {
                 Component component = new Span();
                 add(component);
-//                seeAllCars.getUI().ifPresent(ui -> ui.navigate("/allCars"));
+//                allCarsView.getUI().ifPresent(ui -> ui.navigate("/allCars"));
 
             });
 
-            seeCustomers.addMenuItemClickListener(ClickEvent -> {
-                seeCustomers.getUI().ifPresent(ui -> ui.navigate("/allOwners"));
+            allCustomersView.addMenuItemClickListener(ClickEvent -> {
+                allCustomersView.getUI().ifPresent(ui -> ui.navigate("/allOwners"));
 
             });
 
@@ -102,9 +103,11 @@ public class Main extends HorizontalLayout {
 
             menu.addMenuItems(
                     addCars,
-                    seeAllCars,
+                    allCarsView,
                     addCustomer,
-                    seeCustomers,
+                    allCustomersView,
+                    addOrder,
+                    allOrderView,
                     calendar,
                     pricesCustomer,
                     editionPrices,
@@ -156,15 +159,11 @@ public class Main extends HorizontalLayout {
             );
 
             Component content = new Span(
-
                     mainPicture
-
             );
 
             appLayout.setContent(content);
-
             add(appLayout);
-
         } else {
             AppLayout appLayout = new AppLayout();
             AppLayoutMenu menu = appLayout.createMenu();
@@ -203,13 +202,10 @@ public class Main extends HorizontalLayout {
             );
 
             Component content = new Span(
-
                     mainPicture
-
             );
 
             appLayout.setContent(content);
-
             add(appLayout);
         }
     }
