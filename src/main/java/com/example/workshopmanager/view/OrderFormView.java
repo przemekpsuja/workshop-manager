@@ -4,7 +4,7 @@ import com.example.workshopmanager.controller.RepairOrderController;
 import com.example.workshopmanager.model.Car;
 import com.example.workshopmanager.model.Owner;
 import com.example.workshopmanager.model.RepairOrder;
-import com.example.workshopmanager.model.StatusOrder;
+import com.example.workshopmanager.model.enums.StatusOrder;
 import com.example.workshopmanager.repository.CarRepository;
 import com.example.workshopmanager.repository.OwnerRepository;
 import com.example.workshopmanager.repository.RepairOrderRepository;

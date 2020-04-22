@@ -1,5 +1,6 @@
 package com.example.workshopmanager.model;
 
+import com.example.workshopmanager.model.enums.VatRate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,7 @@ public class Invoice {
     @UniqueElements
     private String invoiceNumber;
     private LocalDate dateOfInvoiceCreated;
+    private VatRate VAT_RATE;
     @NotNull(message = "Owner can't be null")
     @OneToOne
     private Owner owner;

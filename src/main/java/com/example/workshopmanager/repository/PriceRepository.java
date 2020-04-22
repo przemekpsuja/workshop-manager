@@ -1,7 +1,7 @@
 package com.example.workshopmanager.repository;
 
 import com.example.workshopmanager.model.Price;
-import com.example.workshopmanager.model.PriceCategory;
+import com.example.workshopmanager.model.enums.PriceCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

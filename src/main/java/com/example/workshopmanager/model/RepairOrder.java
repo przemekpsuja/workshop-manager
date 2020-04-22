@@ -1,5 +1,6 @@
 package com.example.workshopmanager.model;
 
+import com.example.workshopmanager.model.enums.StatusOrder;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;

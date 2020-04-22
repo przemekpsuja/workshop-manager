@@ -2,8 +2,8 @@ package com.example.workshopmanager.view;
 
 import com.example.workshopmanager.controller.CarAdd;
 import com.example.workshopmanager.model.Car;
-import com.example.workshopmanager.model.CarType;
-import com.example.workshopmanager.model.EngineType;
+import com.example.workshopmanager.model.enums.CarType;
+import com.example.workshopmanager.model.enums.EngineType;
 import com.example.workshopmanager.repository.CarRepository;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;

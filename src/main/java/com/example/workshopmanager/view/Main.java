@@ -41,10 +41,10 @@ public class Main extends HorizontalLayout {
             AppLayoutMenuItem calendar = new AppLayoutMenuItem("Terminarz", "dates");
             AppLayoutMenuItem contactDetails = new AppLayoutMenuItem("Kontakt", "contact");
             AppLayoutMenuItem editionPrices = new AppLayoutMenuItem("Zarządzaj cenami", "prices-add");
-            AppLayoutMenuItem addCars = new AppLayoutMenuItem("Dodaj samochód", "addCar");
-            AppLayoutMenuItem addCustomer = new AppLayoutMenuItem("Dodaj klienta", "addClient");
-            AppLayoutMenuItem allCustomersView = new AppLayoutMenuItem("Lista klientów", "allOwners");
-            AppLayoutMenuItem allCarsView = new AppLayoutMenuItem("Lista samochodów", "allCars");
+            AppLayoutMenuItem addCars = new AppLayoutMenuItem("Dodaj samochód", "add-car");
+            AppLayoutMenuItem addCustomer = new AppLayoutMenuItem("Dodaj klienta", "add-client");
+            AppLayoutMenuItem allCustomersView = new AppLayoutMenuItem("Lista klientów", "all-owners");
+            AppLayoutMenuItem allCarsView = new AppLayoutMenuItem("Lista samochodów", "all-cars");
             AppLayoutMenuItem addOrder = new AppLayoutMenuItem("Nowe zlecenie", "add-order");
             AppLayoutMenuItem allOrderView = new AppLayoutMenuItem("Lista Zleceń", "all-orders");
 

@@ -1,7 +1,7 @@
 package com.example.workshopmanager.controller;
 
 import com.example.workshopmanager.model.Price;
-import com.example.workshopmanager.model.PriceCategory;
+import com.example.workshopmanager.model.enums.PriceCategory;
 import com.example.workshopmanager.repository.PriceRepository;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;

@@ -1,5 +1,7 @@
 package com.example.workshopmanager.model;
 
+import com.example.workshopmanager.model.enums.CarType;
+import com.example.workshopmanager.model.enums.EngineType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;

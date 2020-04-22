@@ -1,5 +1,7 @@
 package com.example.workshopmanager.model;
 
+import com.example.workshopmanager.model.enums.PriceCategory;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
