@@ -27,6 +27,8 @@ public class RepairOrder {
     private StatusOrder status;
     private String description = "";
 
+
+
     public Long getId() {
         return id;
     }

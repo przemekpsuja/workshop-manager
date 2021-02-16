@@ -22,22 +22,31 @@ public class RepairOrderController {
         localDateTime = LocalDateTime.now();
         int currentMonthValue = localDateTime.getMonthValue();
         int currentYearValue = localDateTime.getYear();
+        int currentDayValue = localDateTime.getDayOfMonth();
+//        int currentHourValue = localDateTime.getHour();
+//        int currentMinuteValue = localDateTime.getMinute();
+//        int currentSecondsValue = localDateTime.getSecond();
+//        Instant instant = Instant.now();
+
         if (repairOrderRepository.findLastOrderNumber() == null) {
             temp = "0/0/0";
         } else {
             temp = repairOrderRepository.findLastOrderNumber();
         }
+
         String[] splitedTemp = temp.split("/");
-        int tempCounter = Integer.parseInt(splitedTemp[0]);
-        int tempMonth = Integer.parseInt(splitedTemp[1]);
-        int tempYear = Integer.parseInt(splitedTemp[2]);
+        int tempCounterValue = Integer.parseInt(splitedTemp[0]);
+        int tempMonthValue = Integer.parseInt(splitedTemp[1]);
+        int tempYearValue = Integer.parseInt(splitedTemp[2]);
+
         //TODO zerowanie licznika kazdego nowego miesiaca- nie działa!!!!
-        if (tempCounter != 1 && (currentMonthValue > tempMonth || currentYearValue > tempYear)) {
-            tempCounter = 1;
-            return tempCounter + "/" + currentMonthValue + "/" + currentYearValue;
+        if (tempCounterValue >= 1 && ((currentMonthValue > tempMonthValue || currentYearValue > tempYearValue))
+                && localDateTime.isAfter(repairOrderRepository.findLastOrderCreatedTime())) {
+            tempCounterValue = 1;
+            return tempCounterValue + "/" + currentMonthValue + "/" + currentYearValue;
         } else {
-            tempCounter++;
-            return tempCounter + "/" + localDateTime.getMonthValue() + "/" + localDateTime.getYear();
+            return ++tempCounterValue + "/" + localDateTime.getMonthValue() + "/" + localDateTime.getYear();
         }
     }
+
 }
