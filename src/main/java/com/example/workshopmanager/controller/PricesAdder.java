@@ -23,7 +23,7 @@ import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Route("add-prices")
-@StyleSheet("/background.css")
+@StyleSheet("background.css")
 public class PricesAdder extends VerticalLayout {
 
     @Autowired
