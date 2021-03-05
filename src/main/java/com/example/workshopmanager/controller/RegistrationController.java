@@ -3,6 +3,7 @@ package com.example.workshopmanager.controller;
 import com.example.workshopmanager.model.User;
 import com.example.workshopmanager.repository.UserRepository;
 import com.example.workshopmanager.security.RegistrationForm;
+import com.example.workshopmanager.services.MailService;
 import com.vaadin.flow.component.notification.Notification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;

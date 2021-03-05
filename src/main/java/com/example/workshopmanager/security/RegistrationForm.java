@@ -1,6 +1,6 @@
 package com.example.workshopmanager.security;
 
-import com.example.workshopmanager.controller.MailService;
+import com.example.workshopmanager.services.MailService;
 import com.example.workshopmanager.controller.RegistrationController;
 import com.example.workshopmanager.repository.UserRepository;
 import com.vaadin.flow.component.button.Button;

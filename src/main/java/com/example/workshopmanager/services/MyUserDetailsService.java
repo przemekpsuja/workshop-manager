@@ -1,5 +1,6 @@
-package com.example.workshopmanager.controller;
+package com.example.workshopmanager.services;
 
+import com.example.workshopmanager.controller.MyUserDetails;
 import com.example.workshopmanager.model.User;
 import com.example.workshopmanager.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;

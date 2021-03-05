@@ -1,4 +1,4 @@
-package com.example.workshopmanager.controller;
+package com.example.workshopmanager.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
