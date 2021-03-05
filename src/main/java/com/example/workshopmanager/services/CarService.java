@@ -2,7 +2,6 @@ package com.example.workshopmanager.services;
 
 import com.example.workshopmanager.model.Car;
 import com.example.workshopmanager.repository.CarRepository;
-import elemental.json.impl.JsonUtil;
 import org.springframework.stereotype.Service;
 
 @Service
